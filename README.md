@@ -1,10 +1,7 @@
-# Ananya_Wasker_Recipe_Prediction
-Hi!
-
 # 🥗 Recipe Rating Prediction Project
 
 This is a data science project for DSC 80 at UC San Diego.  
-We aim to predict a recipe’s average rating based on nutritional features.
+I aim to predict a recipe’s average rating based on nutritional features.
 
 ## 📊 Goals
 
