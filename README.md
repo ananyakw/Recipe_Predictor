@@ -131,10 +131,10 @@ Now, let's look at the missingness dependency of the column that has the most mi
 
 - Create new column that contains True values if ```rating``` in that row is missing, and False if not.
 - Create permutation test function that can be applied to the three columns.
-    1. There are two probability distributions of the feature column (say, ```n_steps```). One is when ```rating``` is missing, and the other is where ```rating``` is not missing. Compute the Total Variation Distance between these two distributions, and this is our observed test statistic.
-    2. Now, randomly shuffle the new column, ```rating_missing```, to simulate our null hypothesis, assigning Trues and Falses to random rows. Do this shuffling simulation ```n``` times, and add all computed TVDs to one array.
-    3. Then, check the distribution of all these TVD values in the array and plot the observed TVD value in this plot. This will give you an idea of whether the observed value is consistent with the null hypothesis or is evidence enough to reject the null.
-    4. Lastly, compute p-value, which is the proportion of simulated TVDs under null that are more extreme than the observed TVD. If the value is below 0.05 (our signficance level), our observed TVD is statistically significant, and therefore we can reject the null hypothesis that ```rating``` missingness is not dependent on the feature column (in this case, ```n_steps```).
+    1. There are two probability distributions of the feature column (say, ```n_steps```). One is when ```rating``` is missing, and the other is where ```rating``` is not missing. Compute the absolute difference in means between these two distributions, and this is our observed test statistic.
+    2. Now, randomly shuffle the new column, ```rating_missing```, to simulate our null hypothesis, assigning Trues and Falses to random rows. Do this shuffling simulation ```n``` times, and add all computed absolute difference in means to one array.
+    3. Then, check the distribution of all these absolute difference in means values in the array and plot the observed absolute difference in means value in this plot. This will give you an idea of whether the observed value is consistent with the null hypothesis or is evidence enough to reject the null.
+    4. Lastly, compute p-value, which is the proportion of simulated absolute difference in means under null that are more extreme than the observed absolute difference in means. If the value is below 0.05 (our signficance level), our observed absolute difference in means is statistically significant, and therefore we can reject the null hypothesis that ```rating``` missingness is not dependent on the feature column (in this case, ```n_steps```).
 
 <iframe
   src="assets/perm.html"
@@ -226,6 +226,6 @@ Lastly, we tested if our model is fair for different groups. To keep up with our
 
 Below is the null distribution of test-statistics (F1 score of simple recipes - F1 score of complex recipes), alongside our observed test-statistic in our dataset.
 
-![P-Value = 0.337 | Fail to reject null hypothesis. Model is not unfair between groups. ](assets/newplot.png)
+![P-Value = 0.337 | Fail to reject null hypothesis. Model is not unfair between groups. ](/assets/newplot.png)
 
 In conlusion, since this p-value is well above the significance level of 0.05, we fail to reject the null hypothesis. This indicates that the observed performance difference can be attributed to random chance, and thus, we do not have sufficient evidence to conclude that the model is unfair or biased in its predictions across recipe complexity groups. Overall, the model appears to perform equitably between simple and complex recipes. Thank you!
