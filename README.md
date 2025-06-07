@@ -226,6 +226,6 @@ Lastly, we tested if our model is fair for different groups. To keep up with our
 
 Below is the null distribution of test-statistics (F1 score of simple recipes - F1 score of complex recipes), alongside our observed test-statistic in our dataset.
 
-![P-Value = 0.337 | Fail to reject null hypothesis. Model is not unfair between groups. ](/assets/newplot.png)
+![P-Value = 0.337, Fail to reject null hypothesis. ](/assets/newplot.png)
 
 In conlusion, since this p-value is well above the significance level of 0.05, we fail to reject the null hypothesis. This indicates that the observed performance difference can be attributed to random chance, and thus, we do not have sufficient evidence to conclude that the model is unfair or biased in its predictions across recipe complexity groups. Overall, the model appears to perform equitably between simple and complex recipes. Thank you!
