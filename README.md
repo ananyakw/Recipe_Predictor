@@ -72,7 +72,7 @@ Here is the cleaned ```merged``` dataset with relevant columns.
 Let's look at the distributions of our relevant variables, for example, ```tags```, ```n_steps```, ```n_ingredients```, ```avg_rating```, and the nutrition columns.
 
 <iframe
-  src="top-tags/.html"
+  src="assets/top-tags.html"
   width="800"
   height="600"
   frameborder="0"
@@ -96,7 +96,7 @@ Here, we see visualizations of each of the nutritional columns. We employed the 
 We also investigated relationships between different variables that could help us uncover our research question.
 
 <iframe
-  src="correlation-matrix/.html"
+  src="assets/correlation-matrix.html"
   width="800"
   height="600"
   frameborder="0"
@@ -104,10 +104,46 @@ We also investigated relationships between different variables that could help u
 
 From the correlation matrix, we see lots of interesting relationships. Primarily, we see that ```total_calories``` is highly correlated with ```saturated fats```, ```fats```, ```sugars```. ```Carbohydrates``` in recipes are highly associated with ```sugar``` content in recipes. Meanwhile, we see that ```sugar``` is not highly correlated with ```protein``` content in foods, and both ```saturated fats``` and unsaturated ```fats``` are also not highly correlated with ```sodium``` in foods. From this matrix, we can extract that healthier recipes in this dataset will have higher ```protein``` content and lower ```sugar``` content, and therefore, an overall lower ```total_calories``` count. These are a few indicators that we can use later in the prediction model to map out the healthiness of recipes.
 
+### Interesting Aggregates
+
+| protein_bin    |   n_ingredients |   n_steps |   rating |
+|:---------------|----------------:|----------:|---------:|
+| Low Protein    |         7.6483  |   8.47094 |  4.6956  |
+| Medium Protein |         9.19655 |  10.1598  |  4.67908 |
+| High Protein   |        10.4035  |  11.4596  |  4.66452 |
+
+This shows us that high protein recipes, on average, have high number of ingredients and high number of steps, but a lower average rating. On the other hand, low protein recipes, on average, have the least number of steps and ingredients required to make them but have the highest average rating. Since protein is a proxy for healthiness in recipes, this points towards healthy recipes being slightly more complex and more healthy, but ultimately getting comparitively lower ratings.
 
 ## Assessment of Missingness
 
-Describe any missing data issues and how you handled them.
+### NMAR Analysis
+
+In order for a column to be NMAR (not missing at random), we need to make sure that NMAR is the main reason the data is missing. In other words, the chances of a value missing must be primarily dependent on the value itself. 
+
+In this dataset, I believe that the ```review``` column is NMAR because the chance that data is missing in this column may be because of the data point itself. Most people only give reviews if they really enjoyed or liked something. For example, on the App Store, most reviews we see are positive because people who really benefitted from an app want to show their appreciation and love to the app's creator and are willing to take the effort to think of things to say, type them, and submit them. In the same fashion, users on food.com may only be inclined to leave a written review if they really enjoyed a recipe, and would usually skip giving unkind / so-so reviews to a recipe purely due to indifference or lack of interest to make the effort and submit a written review. 
+
+### Missingness Dependency
+
+Now, let's look at the missingness dependency of the column that has the most missing values: ```rating```. We check if the chances that a value is missing in ```rating``` could be dependent on other columns, particularly ```n_steps```, ```minutes```, and ```total_calories```, as these columns are relevant to our research question and project. These are the steps we'll follow to check if ```rating``` is MAR (missing at random) on these columns:
+
+- Create new column that contains True values if ```rating``` in that row is missing, and False if not.
+- Create permutation test function that can be applied to the three columns.
+    1. There are two probability distributions of the feature column (say, ```n_steps```). One is when ```rating``` is missing, and the other is where ```rating``` is not missing. Compute the Total Variation Distance between these two distributions, and this is our observed test statistic.
+    2. Now, randomly shuffle the new column, ```rating_missing```, to simulate our null hypothesis, assigning Trues and Falses to random rows. Do this shuffling simulation ```n``` times, and add all computed TVDs to one array.
+    3. Then, check the distribution of all these TVD values in the array and plot the observed TVD value in this plot. This will give you an idea of whether the observed value is consistent with the null hypothesis or is evidence enough to reject the null.
+    4. Lastly, compute p-value, which is the proportion of simulated TVDs under null that are more extreme than the observed TVD. If the value is below 0.05 (our signficance level), our observed TVD is statistically significant, and therefore we can reject the null hypothesis that ```rating``` missingness is not dependent on the feature column (in this case, ```n_steps```).
+
+<iframe
+  src="assets/perm.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From the distribution, we can see that missingness of rating likely depends on n_steps. This is because the p-value is extremely small in this case, and is less than the significance level of 0.05.
+
+We do this twice for two other variables, and find that rating missingness is likely dependent on total_calories but not on minutes.
+
 
 ## Hypothesis Testing
 
