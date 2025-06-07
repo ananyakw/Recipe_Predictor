@@ -83,7 +83,7 @@ From this plot, we see the most frequent tags on recipes on food.com. Notable ta
 Now let's look at the distribution of nutritional content.
 
 <iframe
-  src="/assets/log-nutritional-distributions.html"
+  src="assets/log-nutritional-distributions.html"
   width="800"
   height="600"
   frameborder="0"
