@@ -91,6 +91,19 @@ Now let's look at the distribution of nutritional content.
 
 Here, we see visualizations of each of the nutritional columns. We employed the log scale because our data is heavily right-skewed due to the presence of outliers, as seen in the section before this. Doing the log-scale helps lower the effect of outliers in the visualizations. We also see that most histograms here are normally distributed, but have a uptick in 0 values for each nutrient. This high prevalance of 0 values in each column is to be expected because of the sheer variety of recipes and foods. Dessert recipes, of which there are bound to be many, are expected to have almost 0 protein and 0 carbohydrates present, while fried foods are expected to have almost 0 sugar present. These wildly different nutritional goals for each recipe are just a few examples that explain the high 0 values in each plot. Since we are looking into nutrition of foods, this is insightful information!
 
+### Bivariate Analysis
+
+We also investigated relationships between different variables that could help us uncover our research question.
+
+<iframe
+  src="correlation-matrix/.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From the correlation matrix, we see lots of interesting relationships. Primarily, we see that ```total_calories``` is highly correlated with ```saturated fats```, ```fats```, ```sugars```. ```Carbohydrates``` in recipes are highly associated with ```sugar``` content in recipes. Meanwhile, we see that ```sugar``` is not highly correlated with ```protein``` content in foods, and both ```saturated fats``` and unsaturated ```fats``` are also not highly correlated with ```sodium``` in foods. From this matrix, we can extract that healthier recipes in this dataset will have higher ```protein``` content and lower ```sugar``` content, and therefore, an overall lower ```total_calories``` count. These are a few indicators that we can use later in the prediction model to map out the healthiness of recipes.
+
 
 ## Assessment of Missingness
 
